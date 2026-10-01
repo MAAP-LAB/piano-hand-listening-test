@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Piano Hand Separation Listening Test</title>
+<style>
+ body{font-family:system-ui,-apple-system,sans-serif;max-width:860px;margin:24px auto;padding:0 16px;color:#222;line-height:1.5}
+ h1{font-size:21px;margin-bottom:4px} .meta{color:#666;font-size:13.5px}
+ .card{border:1px solid #ddd;border-radius:10px;padding:16px;margin:14px 0}
+ .target{font-size:18px;font-weight:700;margin-bottom:10px}
+ .target .L{color:#1f5fbf} .target .R{color:#c0392b}
+ .top{background:#f3f7ff;border-radius:8px;padding:10px 12px;margin-bottom:12px}
+ .top div{display:flex;align-items:center;gap:10px;margin:6px 0;flex-wrap:wrap}
+ .top b{min-width:210px}
+ .cond{display:flex;align-items:center;gap:10px;margin:10px 0;flex-wrap:wrap}
+ .cond .lab{width:22px;font-weight:700} .cond audio{height:34px;max-width:100%}
+ .cond input[type=range]{flex:1;min-width:160px} .val{width:36px;text-align:right;font-variant-numeric:tabular-nums}
+ .unplayed{outline:2px solid #f0b400;border-radius:6px}
+ button{padding:8px 14px;border-radius:8px;border:1px solid #888;background:#fff;cursor:pointer;font-size:14px}
+ button:disabled{opacity:.4;cursor:not-allowed}
+ .nav{display:flex;justify-content:space-between;align-items:center;margin:14px 0;gap:10px;flex-wrap:wrap}
+ .scale{display:flex;justify-content:space-between;font-size:12px;color:#777;margin:-4px 0 6px 32px}
+ #warn{color:#b06000;font-size:13.5px} input#rid{padding:6px;border:1px solid #aaa;border-radius:6px}
+ ol{padding-left:20px} li{margin:3px 0}
+</style></head><body>
+<h1>Piano Hand Separation Listening Test</h1>
+<div id="draft" style="display:none;background:#fff3cd;border:1px solid #e0b100;border-radius:8px;padding:10px;margin:10px 0">
+<b>※ 미리보기 버전입니다. 아직 응답하지 마세요.</b> (Preview only — please do not submit ratings yet.)</div>
+<div class="card">
+<b>안내 (약 25분, 헤드폰 필수)</b>
+<ol>
+ <li>각 문항에는 <b>목표 손</b>(왼손 또는 오른손)이 표시됩니다.</li>
+ <li>위쪽 회색 상자의 <b>원본 녹음</b>과 <b>가이드</b>를 먼저 들으세요.
+   가이드는 목표 손이 치는 음만 MIDI로 합성한 소리입니다. 음색은 다르니 <u>어떤 음이 목표 손인지</u>를 아는 데만 쓰세요.
+   (일부 문항에는 가이드 대신 <b>정답(Reference)</b>이 주어집니다.)</li>
+ <li>아래 무라벨 A, B, C… 를 모두 듣고 0–100점으로 평가하세요:
+   <b>목표 손 소리만 깨끗하고 자연스럽게 들릴수록 높게</b>,
+   다른 손 소리가 섞이거나 소리가 망가져 있을수록 낮게.</li>
+ <li>모든 클립을 한 번 이상 재생하고 모든 점수를 정해야 다음으로 넘어갈 수 있습니다. 진행 상황은 이 브라우저에 자동 저장됩니다.</li>
+ <li>끝나면 <b>Export</b>로 결과 파일을 내려받아 보내주세요.</li>
+</ol>
+<span class="meta">Each trial names a target hand. Rate each unlabelled clip 0–100: higher = only the target hand, clean and natural.</span>
+</div>
+<p>Rater ID: <input id="rid" placeholder="이름 또는 ID"> &nbsp;<span id="status" class="meta"></span></p>
+<div id="app"></div>
+<div class="nav"><button id="prev">◀ 이전</button><span id="pos" class="meta"></span><span id="warn"></span><button id="next">다음 ▶</button></div>
+<div class="nav"><span class="meta">모든 문항을 마친 뒤 내려받아 주세요.</span><button id="export">⬇ Export results (JSON)</button></div>
+<script>
+const STORE = "piano_hand_lt_v1";
+let CFG = null, seq = [], idx = 0, ratings = {}, order = {}, played = {};
+function shuffle(a){a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function save(){try{localStorage.setItem(STORE,JSON.stringify({seq,idx,ratings,order,played,rid:document.getElementById('rid').value}));}catch(e){}}
+function load(){try{const s=JSON.parse(localStorage.getItem(STORE)||"null");return s;}catch(e){return null;}}
+function init(cfg){
+ CFG = cfg;
+ if(cfg.draft) document.getElementById('draft').style.display='block';
+ const byId = Object.fromEntries(cfg.items.map(it=>[it.id,it]));
+ const st = load();
+ if(st && st.seq && st.seq.every(id=>byId[id])){({seq,idx,ratings,order,played}=st);document.getElementById('rid').value=st.rid||"";}
+ else{
+  const screen = shuffle(cfg.items.filter(i=>i.part==="screen").map(i=>i.id));
+  const real = shuffle(cfg.items.filter(i=>i.part==="real").map(i=>i.id));
+  // first trial is a screening trial (with a true reference) for familiarisation; the rest are spread out
+  seq = screen.length ? [screen[0]] : [];
+  const rest = screen.slice(1), step = Math.max(1, Math.floor(real.length/(rest.length+1)));
+  real.forEach((id,i)=>{seq.push(id); if(rest.length && (i+1)%step===0) seq.push(rest.shift());});
+  seq.push(...rest);
+  for(const it of cfg.items){order[it.id]=shuffle(it.rate);ratings[it.id]={};played[it.id]={};}
+ }
+ document.getElementById('status').textContent=`(${seq.length} trials)`;
+ render();
+}
+function audio(it,name,tag){return `<audio controls preload="auto" src="items/${it.id}/${name}.wav" onplay="mark('${it.id}','${tag}')"></audio>`;}
+function mark(item,tag){played[item][tag]=true;const el=document.getElementById('a_'+tag);if(el)el.classList.remove('unplayed');save();check();}
+function render(){
+ const it = CFG.items.find(x=>x.id===seq[idx]), app=document.getElementById('app');
+ document.getElementById('pos').textContent=`Trial ${idx+1} / ${seq.length}`;
+ const hand = it.hand==="left" ? '<span class="L">왼손 (LEFT hand)</span>' : '<span class="R">오른손 (RIGHT hand)</span>';
+ let h = `<div class="card"><div class="target">목표: ${hand}</div><div class="top">`;
+ if(it.part==="screen") h += `<div><b>Reference (정답: 목표 손만)</b>${audio(it,"reference","top_ref")}</div>`;
+ else h += `<div><b>원본 녹음 (mixture)</b>${audio(it,"mixture","top_mix")}</div><div><b>가이드 (목표 손 음만, MIDI 합성)</b>${audio(it,"guide","top_guide")}</div>`;
+ h += `</div><div class="scale"><span>0 = 다른 손이 섞임 / 망가짐</span><span>100 = 목표 손만, 깨끗함</span></div>`;
+ order[it.id].forEach((cond,i)=>{
+  const lab=String.fromCharCode(65+i), v=ratings[it.id][cond];
+  h+=`<div class="cond"><span class="lab">${lab}</span><span id="a_${cond}" class="${played[it.id][cond]?'':'unplayed'}">${audio(it,cond,cond)}</span>
+      <input type="range" min="0" max="100" value="${v??50}" oninput="setv('${it.id}','${cond}',this.value,${i})">
+      <span class="val" id="v_${i}">${v??'–'}</span></div>`;
+ });
+ app.innerHTML = h + `</div>`;
+ check();
+}
+function setv(item,cond,val,i){ratings[item][cond]=+val;document.getElementById('v_'+i).textContent=val;save();check();}
+function check(){
+ const it=CFG.items.find(x=>x.id===seq[idx]);
+ const unplayed=it.rate.filter(c=>!played[it.id][c]).length, unrated=it.rate.filter(c=>ratings[it.id][c]===undefined).length;
+ const ok = unplayed===0 && unrated===0;
+ document.getElementById('next').disabled = !ok || idx===seq.length-1;
+ document.getElementById('warn').textContent = ok ? "" : `재생 안 한 클립 ${unplayed}개, 점수 안 정한 클립 ${unrated}개`;
+}
+document.getElementById('prev').onclick=()=>{if(idx>0){idx--;save();render();}};
+document.getElementById('next').onclick=()=>{if(idx<seq.length-1){idx++;save();render();window.scrollTo(0,0);}};
+document.getElementById('rid').oninput=save;
+document.getElementById('export').onclick=()=>{
+ const rid=document.getElementById('rid').value||('rater_'+Math.floor(Math.random()*1e6));
+ const done=seq.filter(id=>CFG.items.find(x=>x.id===id).rate.every(c=>ratings[id][c]!==undefined)).length;
+ const out={rater:rid,timestamp:new Date().toISOString(),completed:done,total:seq.length,sequence:seq,order,ratings,user_agent:navigator.userAgent};
+ const blob=new Blob([JSON.stringify(out,null,2)],{type:"application/json"});
+ const a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=`piano_lt_${rid}.json`;a.click();
+};
+fetch("config.json").then(r=>r.json()).then(init).catch(e=>{document.getElementById('app').innerHTML="config.json을 불러오지 못했습니다: "+e;});
+</script></body></html>

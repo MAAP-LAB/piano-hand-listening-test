@@ -1,0 +1,270 @@
+{
+ "task": "Piano hand separation listening test",
+ "scale": [
+  0,
+  100
+ ],
+ "items": [
+  {
+   "id": "real_2024-02-14_19-55-17_546s_left",
+   "part": "real",
+   "hand": "left",
+   "kind": "crossing",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-02-14_19-55-17_546s_right",
+   "part": "real",
+   "hand": "right",
+   "kind": "crossing",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-02-15_20-17-26_305s_left",
+   "part": "real",
+   "hand": "left",
+   "kind": "crossing",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-02-15_20-17-26_305s_right",
+   "part": "real",
+   "hand": "right",
+   "kind": "crossing",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-09-03_00-07-46_1398s_left",
+   "part": "real",
+   "hand": "left",
+   "kind": "crossing",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-09-03_00-07-46_1398s_right",
+   "part": "real",
+   "hand": "right",
+   "kind": "crossing",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-02-14_20-10-08_819s_left",
+   "part": "real",
+   "hand": "left",
+   "kind": "random",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-02-14_20-10-08_819s_right",
+   "part": "real",
+   "hand": "right",
+   "kind": "random",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-09-02_21-04-45_122s_left",
+   "part": "real",
+   "hand": "left",
+   "kind": "random",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-09-02_21-04-45_122s_right",
+   "part": "real",
+   "hand": "right",
+   "kind": "random",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-09-03_00-44-45_24s_left",
+   "part": "real",
+   "hand": "left",
+   "kind": "random",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "real_2024-09-03_00-44-45_24s_right",
+   "part": "real",
+   "hand": "right",
+   "kind": "random",
+   "top": [
+    "mixture",
+    "guide"
+   ],
+   "rate": [
+    "anchor_mixture",
+    "audio_only",
+    "key_tokens",
+    "ours",
+    "oracle_roll"
+   ]
+  },
+  {
+   "id": "screen_2024-02-14_19-55-17_546s_left",
+   "part": "screen",
+   "hand": "left",
+   "kind": "crossing",
+   "top": [
+    "reference"
+   ],
+   "rate": [
+    "hidden_reference",
+    "anchor_mixture",
+    "audio_only",
+    "ours"
+   ]
+  },
+  {
+   "id": "screen_2024-02-15_20-17-26_305s_right",
+   "part": "screen",
+   "hand": "right",
+   "kind": "crossing",
+   "top": [
+    "reference"
+   ],
+   "rate": [
+    "hidden_reference",
+    "anchor_mixture",
+    "audio_only",
+    "ours"
+   ]
+  },
+  {
+   "id": "screen_2024-09-03_00-07-46_1398s_left",
+   "part": "screen",
+   "hand": "left",
+   "kind": "crossing",
+   "top": [
+    "reference"
+   ],
+   "rate": [
+    "hidden_reference",
+    "anchor_mixture",
+    "audio_only",
+    "ours"
+   ]
+  }
+ ],
+ "systems": {
+  "audio_only": "A_aug",
+  "key_tokens": "C",
+  "ours": "D_aug",
+  "oracle_roll": "E"
+ },
+ "render_systems": {
+  "audio_only": "A_render",
+  "ours": "D_render"
+ },
+ "seconds": 8.0,
+ "draft": true
+}
