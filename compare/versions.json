@@ -5,20 +5,16 @@
    "@final_mask"
   ],
   [
-   "flow v2 (4 steps)",
-   "@flow2_k4"
-  ],
-  [
-   "flow v2 (1 step)",
-   "@flow2_k1"
-  ],
-  [
    "frozen separator + decoder (4 steps)",
    "@dec_k4"
   ],
   [
-   "frozen separator + decoder (1 step)",
-   "@dec_k1"
+   "decoder + per-hand harmonic map (4 steps)",
+   "@dec_hmap_k4"
+  ],
+  [
+   "flow v2 (4 steps)",
+   "@flow2_k4"
   ]
  ]
 }
