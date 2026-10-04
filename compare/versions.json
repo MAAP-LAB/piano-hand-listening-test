@@ -1,16 +1,16 @@
 {
  "versions": [
   [
-   "final",
-   "final"
+   "mask model (current final)",
+   "@final_mask"
   ],
   [
-   "final+shared loss",
-   "final_shared"
+   "flow v2 (4 steps)",
+   "@flow2_k4"
   ],
   [
-   "final+shared loss+consistency",
-   "final_shared_cons"
+   "flow v2 (1 step)",
+   "@flow2_k1"
   ]
  ]
 }
