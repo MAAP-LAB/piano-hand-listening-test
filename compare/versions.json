@@ -11,6 +11,14 @@
   [
    "flow v2 (1 step)",
    "@flow2_k1"
+  ],
+  [
+   "frozen separator + decoder (4 steps)",
+   "@dec_k4"
+  ],
+  [
+   "frozen separator + decoder (1 step)",
+   "@dec_k1"
   ]
  ]
 }
