@@ -5,16 +5,12 @@
    "@final_mask"
   ],
   [
-   "frozen separator + decoder (4 steps)",
-   "@dec_k4"
+   "final + stronger high-frequency EQ augmentation",
+   "@final_eq"
   ],
   [
    "decoder + per-hand harmonic map (4 steps)",
    "@dec_hmap_k4"
-  ],
-  [
-   "flow v2 (4 steps)",
-   "@flow2_k4"
   ]
  ]
 }
