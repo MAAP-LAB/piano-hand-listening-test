@@ -9,8 +9,8 @@
    "@final_eq"
   ],
   [
-   "decoder + per-hand harmonic map (4 steps)",
-   "@dec_hmap_k4"
+   "final + leakage loss",
+   "@final_leak"
   ]
  ]
 }
