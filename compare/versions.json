@@ -1,15 +1,15 @@
 {
  "versions": [
   [
-   "mask model (current final)",
+   "previous final (mask model)",
    "@final_mask"
   ],
   [
-   "final + leakage loss",
-   "@final_leak"
+   "new: + audio transcription (trained from scratch)",
+   "@aroll_scratch"
   ],
   [
-   "final + audio transcription roll",
+   "+ audio transcription (fine-tuned)",
    "@final_aroll"
   ]
  ]
