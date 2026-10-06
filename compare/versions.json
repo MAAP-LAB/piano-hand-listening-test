@@ -5,12 +5,12 @@
    "@final_mask"
   ],
   [
-   "final + stronger high-frequency EQ augmentation",
-   "@final_eq"
-  ],
-  [
    "final + leakage loss",
    "@final_leak"
+  ],
+  [
+   "final + audio transcription roll",
+   "@final_aroll"
   ]
  ]
 }
