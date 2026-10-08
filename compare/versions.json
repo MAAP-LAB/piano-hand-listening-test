@@ -1,0 +1,16 @@
+{
+ "versions": [
+  [
+   "audio transcription (current final)",
+   "@aroll_scratch"
+  ],
+  [
+   "+ real one-hand fine-tune 10% balanced",
+   "@aroll_realb"
+  ],
+  [
+   "+ real one-hand fine-tune 25%",
+   "@aroll_real"
+  ]
+ ]
+}
